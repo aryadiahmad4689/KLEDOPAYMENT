@@ -26,7 +26,7 @@ class PaymentTest extends TestCase
     {
     $payments = \App\Models\Payment::factory()->create();
     $this->post('/payments',$payments->toArray());
-    $this->assertEquals(9,Payment::all()->count());
+    $this->assertEquals(1,Payment::all()->count());
     }
 
     public function testfieldData()
@@ -43,7 +43,7 @@ class PaymentTest extends TestCase
          ]);
     }
 
-    public function testDelete()
+    public function testDeleteEmptyId()
     {
         $response = $this->delete('/payments');
         $response->assertStatus(302);
