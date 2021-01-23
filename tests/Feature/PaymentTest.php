@@ -23,18 +23,15 @@ class PaymentTest extends TestCase
 
     public function testStore()
     {
-        $this->assertDatabaseHas('payments',[
-            'payment_name' => 'BNI'
-        ]);
-
-        $response = $this->post('/payments');
-        $response->assertStatus(200);
+    $payments = \App\Models\Payment::factory()->create();
+    $this->post('/payments',$payments->toArray());
+    $this->assertEquals(1,Payment::all()->count());
 
     }
 
     public function testDelete()
     {
         $response = $this->delete('/payments');
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 }
