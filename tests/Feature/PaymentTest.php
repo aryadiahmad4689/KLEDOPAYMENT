@@ -15,18 +15,32 @@ class PaymentTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testRouteIndex()
     {
         $response = $this->get('/payments');
         $response->assertStatus(200);
     }
 
-    public function testStore()
+
+    public function testStoreOneField()
     {
     $payments = \App\Models\Payment::factory()->create();
     $this->post('/payments',$payments->toArray());
-    $this->assertEquals(1,Payment::all()->count());
+    $this->assertEquals(9,Payment::all()->count());
+    }
 
+    public function testfieldData()
+    {
+        $paymentName = 'BNI';
+
+        $payment = new Payment();
+        $payment->payment_name = $paymentName;
+        $payment->save();
+
+        // Melihat data BNI ada tidak di database
+        $this->assertDatabaseHas('payments', [
+            'payment_Name' => 'BNI'
+         ]);
     }
 
     public function testDelete()
