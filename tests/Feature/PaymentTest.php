@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentController;
 use App\Models\Payment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\SkippedTest;
 use Tests\TestCase;
 
 class PaymentTest extends TestCase
@@ -24,9 +25,13 @@ class PaymentTest extends TestCase
 
     public function testStoreOneField()
     {
-    $payments = \App\Models\Payment::factory()->create();
-    $this->post('/payments',$payments->toArray());
-    $this->assertEquals(1,Payment::all()->count());
+    $countPayment = Payment::count();
+    if($countPayment <1){
+        $payments = \App\Models\Payment::factory()->create();
+        $this->post('/payments',$payments->toArray());
+        $this->assertEquals(1,Payment::all()->count());
+    }
+
     }
 
     public function testfieldData()
