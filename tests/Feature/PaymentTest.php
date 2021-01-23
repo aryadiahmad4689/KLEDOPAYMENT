@@ -2,15 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\PaymentController;
 use App\Models\Payment;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use PHPUnit\Framework\SkippedTest;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
+    use DatabaseTransactions;
     /**
      * A basic feature test example.
      *
@@ -31,7 +29,7 @@ class PaymentTest extends TestCase
         $this->post('/payments',$payments->toArray());
         $this->assertEquals(1,Payment::all()->count());
     }
-
+    $this->assertTrue(true);
     }
 
     public function testfieldData()
