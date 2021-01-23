@@ -50,4 +50,12 @@ class PaymentTest extends TestCase
         $response = $this->delete('/payments');
         $response->assertStatus(302);
     }
+
+    public function testDeleteId()
+    {
+           $paymentd = \App\Models\Payment::factory()->create();
+           $payment = Payment::find($paymentd->id);
+           $payment->delete();
+           $this->assertDatabaseMissing('payments',['id'=> $payment->id]);
+    }
 }
